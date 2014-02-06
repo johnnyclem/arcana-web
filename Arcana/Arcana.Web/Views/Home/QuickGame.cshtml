@@ -1,27 +1,6 @@
 ﻿@{
     ViewBag.Title = "Quick Game";
-}
-
-@section sidebar
-{
-    <div class="primary-sidebar">
-        <ul class="nav navbar-collapse collapse navbar-collapse-primary">
-            <li>
-                <span class="glow"></span>
-                <a href="/">
-                    <i class="icon-home icon-2x"></i>
-                    <span>Home</span>
-                </a>
-            </li>
-            <li class="active">
-                <span class="glow"></span>
-                <a href="@Url.Action("QuickGame")">
-                    <i class="icon-exchange icon-2x"></i>
-                    <span>Quick Game</span>
-                </a>
-            </li>
-        </ul>
-    </div>
+    ViewBag.ActiveMenuItem = "quickgame";
 }
 
 <div class="container">

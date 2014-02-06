@@ -9,10 +9,16 @@ namespace Arcana.Web
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include("~/Scripts/jquery-{version}.js"));
-            bundles.Add(new ScriptBundle("~/bundles/application").Include("~/Scripts/application.js"));
+            bundles.Add(new ScriptBundle("~/bundles/application").Include(
+                "~/Scripts/application.js",                 // Theme JS
+                "~/Scripts/app/app.js",                     // Angular app
+                "~/Scripts/app/services/authService.js",    // Auth service
+                "~/Scripts/app/controllers/topnav.js"       // Top navigation controller
+            ));
             bundles.Add(new ScriptBundle("~/bundles/angular").Include(
                 "~/Scripts/angular.js",
-                "~/Scripts/angular-sanitize.js"));
+                "~/Scripts/angular-sanitize.js"
+            ));
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include("~/Scripts/bootstrap.js"));
 
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
@@ -23,18 +29,19 @@ namespace Arcana.Web
             bundles.Add(new StyleBundle("~/Content/bootstrap").Include("~/Content/bootstrap.css"));
 
             bundles.Add(new StyleBundle("~/Content/themes/base/css").Include(
-                        "~/Content/themes/base/jquery.ui.core.css",
-                        "~/Content/themes/base/jquery.ui.resizable.css",
-                        "~/Content/themes/base/jquery.ui.selectable.css",
-                        "~/Content/themes/base/jquery.ui.accordion.css",
-                        "~/Content/themes/base/jquery.ui.autocomplete.css",
-                        "~/Content/themes/base/jquery.ui.button.css",
-                        "~/Content/themes/base/jquery.ui.dialog.css",
-                        "~/Content/themes/base/jquery.ui.slider.css",
-                        "~/Content/themes/base/jquery.ui.tabs.css",
-                        "~/Content/themes/base/jquery.ui.datepicker.css",
-                        "~/Content/themes/base/jquery.ui.progressbar.css",
-                        "~/Content/themes/base/jquery.ui.theme.css"));
+                "~/Content/themes/base/jquery.ui.core.css",
+                "~/Content/themes/base/jquery.ui.resizable.css",
+                "~/Content/themes/base/jquery.ui.selectable.css",
+                "~/Content/themes/base/jquery.ui.accordion.css",
+                "~/Content/themes/base/jquery.ui.autocomplete.css",
+                "~/Content/themes/base/jquery.ui.button.css",
+                "~/Content/themes/base/jquery.ui.dialog.css",
+                "~/Content/themes/base/jquery.ui.slider.css",
+                "~/Content/themes/base/jquery.ui.tabs.css",
+                "~/Content/themes/base/jquery.ui.datepicker.css",
+                "~/Content/themes/base/jquery.ui.progressbar.css",
+                "~/Content/themes/base/jquery.ui.theme.css"
+            ));
         }
     }
 }

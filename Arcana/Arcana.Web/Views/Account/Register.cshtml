@@ -1,37 +1,62 @@
-﻿@model Arcana.Web.Models.RegisterModel
-@{
+﻿@{
+    Layout = "~/Views/Shared/_LayoutNoMenu.cshtml";
     ViewBag.Title = "Register";
 }
 
-<hgroup class="title">
-    <h1>@ViewBag.Title.</h1>
-    <h2>Create a new account.</h2>
-</hgroup>
+<div class="container" data-ng-controller="register as vm">
+    <div class="col-md-4 col-md-offset-4">
+        <div class="padded">
+            <div class="login box" style="margin-top: 20px;">
+                <div class="box-header">
+                    <span class="title">Register</span>
+                </div>
+                <div class="box-content padded">
+                    <form name="registerForm" class="separate-sections">
+                        <div class="input-group addon-left">
+                            <span class="input-group-addon">
+                                <i class="icon-envelope"></i>
+                            </span>
+                            <input type="text" id="UserName" name="UserName" placeholder="Username" data-ng-model="vm.username" required />
+                        </div>
+                        <div class="input-group addon-left">
+                            <span class="input-group-addon">
+                                <i class="icon-key"></i>
+                            </span>
+                            <input type="password" id="Password" name="Password" placeholder="Password" data-ng-model="vm.password" required />
+                        </div>
+                        <div class="input-group addon-left">
+                            <span class="input-group-addon">
+                                <i class="icon-key"></i>
+                            </span>
+                            <input type="password" id="ConfirmPassword" name="ConfirmPassword" placeholder="Confirm password" data-ng-model="vm.confirmPassword" required />
+                        </div>
+                        <div>
+                            <button type="button" class="btn btn-blue btn-block" data-ng-click="vm.registerAccount()" data-ng-disabled="registerForm.$invalid">Register <i class="icon-ok"></i></button>
+                        </div>
+                    </form>
+                    <div>
+                        <a href="@Url.Action("Login", "Account")">
+                            Already have an account? <strong>Sign In</strong>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <a href="#" class="btn btn-facebook btn-block">
+                        <i class="icon-facebook-sign"></i> Facebook
+                    </a>
+                </div>
+                <div class="col-md-6">
+                    <a href="#" class="btn btn-twitter btn-block">
+                        <i class="icon-twitter"></i> Twitter
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-@using (Html.BeginForm()) {
-    @Html.AntiForgeryToken()
-    @Html.ValidationSummary()
-
-    <fieldset>
-        <legend>Registration Form</legend>
-        <ol>
-            <li>
-                @Html.LabelFor(m => m.UserName)
-                @Html.TextBoxFor(m => m.UserName)
-            </li>
-            <li>
-                @Html.LabelFor(m => m.Password)
-                @Html.PasswordFor(m => m.Password)
-            </li>
-            <li>
-                @Html.LabelFor(m => m.ConfirmPassword)
-                @Html.PasswordFor(m => m.ConfirmPassword)
-            </li>
-        </ol>
-        <input type="submit" value="Register" />
-    </fieldset>
-}
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
+@section scripts {
+    <script type="text/javascript" src="~/Scripts/app/controllers/register.js"></script>
 }

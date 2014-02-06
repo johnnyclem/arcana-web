@@ -1,0 +1,18 @@
+﻿<div class="primary-sidebar">
+    <ul class="nav navbar-collapse collapse navbar-collapse-primary">
+        <li class="@(ViewBag.ActiveMenuItem == "home" ? "active" : "")">
+            <span class="glow"></span>
+            <a href="/">
+                <i class="icon-home icon-2x"></i>
+                <span>Home</span>
+            </a>
+        </li>
+        <li class="@(ViewBag.ActiveMenuItem == "quickgame" ? "active" : "")">
+            <span class="glow"></span>
+            <a href="@Url.Action("QuickGame")">
+                <i class="icon-exchange icon-2x"></i>
+                <span>Quick Game</span>
+            </a>
+        </li>
+    </ul>
+</div>
