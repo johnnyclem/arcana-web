@@ -1,19 +1,19 @@
 ﻿@{
-    ViewBag.Title = "Home Page";
+    ViewBag.Title = "Quick Game";
 }
 
 @section sidebar
 {
     <div class="primary-sidebar">
         <ul class="nav navbar-collapse collapse navbar-collapse-primary">
-            <li class="active">
+            <li>
                 <span class="glow"></span>
                 <a href="/">
                     <i class="icon-home icon-2x"></i>
                     <span>Home</span>
                 </a>
             </li>
-            <li>
+            <li class="active">
                 <span class="glow"></span>
                 <a href="@Url.Action("QuickGame")">
                     <i class="icon-exchange icon-2x"></i>
@@ -29,7 +29,7 @@
         <div class="area-top clearfix">
             <div class="pull-left header">
                 <h3 class="title">
-                    <i class="icon-home"></i> Home
+                    <i class="icon-exchange"></i> Quick Game
                 </h3>
             </div>
         </div>
@@ -40,7 +40,7 @@
         <div id="breadcrumbs">
             <div class="breadcrumb-button blue">
                 <span class="breadcrumb-label">
-                    <i class="icon-home"></i> Home
+                    <i class="icon-exchange"></i> Quick Game
                 </span>
                 <span class="breadcrumb-arrow"><span></span></span>
             </div>
