@@ -9,89 +9,85 @@ using Arcana.Web.Models;
 using AttributeRouting.Web.Mvc;
 using WebMatrix.WebData;
 using System.Web.Security;
+using Arcana.Framework.Encryption;
 
 namespace Arcana.Web.Controllers
 {
     public class AuthController : BaseApiController
     {
-        [HttpGet]
-        public HttpResponseMessage User()
+        private readonly ArcanaEntities _db;
+        private readonly IEncryptionService _encryptionService;
+
+        public AuthController(IEncryptionService encryptionService)
         {
-            var currentUsername = WebSecurity.CurrentUserName;
-            var foo = WebSecurity.IsAuthenticated;
-            return Success(new { name = currentUsername });
+            _db = new ArcanaEntities();
+            _encryptionService = encryptionService;
         }
 
         [HttpPost]
         public HttpResponseMessage Login(LoginModel model)
         {
-            if (WebSecurity.Login(model.UserName, model.Password, persistCookie: model.RememberMe))
+            var dbUser = _db.Users.SingleOrDefault(u => u.UserName == model.UserName);
+            if (dbUser != null)
             {
-                return Success();
+                var passwordHash = _encryptionService.CreateHash(model.Password, dbUser.Salt);
+                if (passwordHash == dbUser.PasswordHash)
+                {
+                    var response = new LoginResponseViewModel
+                    {
+                        IsAuthenticated = true,
+                        Username = dbUser.UserName,
+                        Role = dbUser.UserRole
+                    };
+                    return Success(response);
+                }
+
+                return Error("Invalid credentials");
             }
-            else
-            {
-                return Error();
-            }
+            return Error("Invalid credentials");
         }
 
         [HttpPost]
         public HttpResponseMessage Logout()
         {
-            WebSecurity.Logout();
             return Success();
         }
 
         [HttpPost]
         public HttpResponseMessage Register(RegisterModel model)
         {
-            try
+            if (model.Password != model.ConfirmPassword)
             {
-                WebSecurity.CreateUserAndAccount(model.UserName, model.Password);
-                WebSecurity.Login(model.UserName, model.Password);
-                return Success();
+                return Error("Passwords must match");
             }
-            catch (MembershipCreateUserException e)
+
+            var policyTest = _encryptionService.TestPasswordPolicy(model.Password);
+            if (string.IsNullOrEmpty(policyTest))
             {
-                var message = ErrorCodeToString(e.StatusCode);
-                return Error(message);
+                var salt = _encryptionService.GenerateSalt();
+                var passwordHash = _encryptionService.CreateHash(model.Password, salt);
+                var user = new User
+                {
+                    ID = Guid.NewGuid(),
+                    PasswordHash = passwordHash,
+                    Salt = salt,
+                    UserName = model.UserName,
+                    UserRole = "User"
+                };
+
+                _db.Users.Add(user);
+                _db.SaveChanges();
+
+                var response = new LoginResponseViewModel
+                {
+                    IsAuthenticated = true,
+                    Username = user.UserName,
+                    Role = user.UserRole
+                };
+                return Success(response);
             }
-        }
 
-        private string ErrorCodeToString(MembershipCreateStatus status)
-        {
-            switch (status)
-            {
-                case MembershipCreateStatus.DuplicateUserName:
-                    return "User name already exists. Please enter a different user name.";
-
-                case MembershipCreateStatus.DuplicateEmail:
-                    return "A user name for that e-mail address already exists. Please enter a different e-mail address.";
-
-                case MembershipCreateStatus.InvalidPassword:
-                    return "The password provided is invalid. Please enter a valid password value.";
-
-                case MembershipCreateStatus.InvalidEmail:
-                    return "The e-mail address provided is invalid. Please check the value and try again.";
-
-                case MembershipCreateStatus.InvalidAnswer:
-                    return "The password retrieval answer provided is invalid. Please check the value and try again.";
-
-                case MembershipCreateStatus.InvalidQuestion:
-                    return "The password retrieval question provided is invalid. Please check the value and try again.";
-
-                case MembershipCreateStatus.InvalidUserName:
-                    return "The user name provided is invalid. Please check the value and try again.";
-
-                case MembershipCreateStatus.ProviderError:
-                    return "The authentication provider returned an error. Please verify your entry and try again. If the problem persists, please contact your system administrator.";
-
-                case MembershipCreateStatus.UserRejected:
-                    return "The user creation request has been canceled. Please verify your entry and try again. If the problem persists, please contact your system administrator.";
-
-                default:
-                    return "An unknown error occurred. Please verify your entry and try again. If the problem persists, please contact your system administrator.";
-            }
+            return Error(policyTest);
         }
     }
 }

@@ -3,7 +3,7 @@
     ViewBag.Title = "Log in";
 }
 
-<div class="container">
+<div class="container" data-ng-controller="login as vm">
     <div class="col-md-4 col-md-offset-4">
         <div class="padded">
             <div class="login box" style="margin-top: 20px;">
@@ -11,28 +11,27 @@
                     <span class="title">Log In</span>
                 </div>
                 <div class="box-content padded">
-                    <form name="loginForm" method="post" action="@Url.Action("Login", "Account")" class="separate-sections">
-                        @Html.AntiForgeryToken()
+                    <form name="loginForm" class="separate-sections">
                         <div class="input-group addon-left">
                             <span class="input-group-addon">
                                 <i class="icon-user"></i>
                             </span>
-                            <input type="text" id="UserName" name="UserName" placeholder="Username" required />
+                            <input type="text" id="UserName" name="UserName" placeholder="Username" data-ng-model="vm.username" required" />
                         </div>
                         <div class="input-group addon-left">
                             <span class="input-group-addon">
                                 <i class="icon-key"></i>
                             </span>
-                            <input type="password" id="Password" name="Password" placeholder="Password" required />
+                            <input type="password" id="Password" name="Password" placeholder="Password" data-ng-model="vm.password" required />
                         </div>
                         <div>
-                            <button type="submit" class="btn btn-blue btn-block">
+                            <button type="submit" class="btn btn-blue btn-block" data-ng-click="vm.login()" data-ng-disabled="loginForm.$invalid">
                                 Log In <i class="icon-signin"></i>
                             </button>
                         </div>
                     </form>
                     <div>
-                        <a href="@Url.Action("Register", "Account")">
+                        <a href="@Url.Action("Register")">
                             Don't have an account? <strong>Register</strong>
                         </a>
                     </div>
@@ -53,3 +52,8 @@
         </div>
     </div>
 </div>
+
+@section scripts
+{
+    <script type="text/javascript" src="~/Scripts/app/controllers/login.js"></script>
+}

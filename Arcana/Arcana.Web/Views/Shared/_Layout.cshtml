@@ -9,8 +9,13 @@
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,800" />
         @Styles.Render("~/Content/css")
         @Scripts.Render("~/bundles/modernizr")
+        <style type="text/css">
+            [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+                display: none !important;
+            }
+        </style>
     </head>
-    <body>
+    <body data-ng-cloak>
         <nav class="navbar navbar-default navbar-inverse navbar-static-top" role="navigation">
             <div class="navbar-header">
                 <a class="navbar-brand" href="/">Arcana</a>

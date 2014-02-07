@@ -8,7 +8,9 @@ namespace Arcana.Web
         // For more information on Bundling, visit http://go.microsoft.com/fwlink/?LinkId=254725
         public static void RegisterBundles(BundleCollection bundles)
         {
-            bundles.Add(new ScriptBundle("~/bundles/jquery").Include("~/Scripts/jquery-{version}.js"));
+            bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
+                "~/Scripts/jquery-{version}.js"
+            ));
             bundles.Add(new ScriptBundle("~/bundles/application").Include(
                 "~/Scripts/application.js",                 // Theme JS
                 "~/Scripts/app/app.js",                     // Angular app
@@ -17,7 +19,8 @@ namespace Arcana.Web
             ));
             bundles.Add(new ScriptBundle("~/bundles/angular").Include(
                 "~/Scripts/angular.js",
-                "~/Scripts/angular-sanitize.js"
+                "~/Scripts/angular-sanitize.js",
+                "~/Scripts/angular-cookie.js"
             ));
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include("~/Scripts/bootstrap.js"));
 

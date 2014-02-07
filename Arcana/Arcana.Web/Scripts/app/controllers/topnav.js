@@ -6,13 +6,13 @@
 
     function topnav($rootScope, authService) {
         var vm = this;
-        vm.isLoggedIn = ($rootScope.user) ? true : false;
-        vm.currentUsername = ($rootScope.user) ? $rootScope.user.name : '';
+        vm.isLoggedIn = authService.isLoggedIn();
+        vm.currentUsername = $rootScope.user.name;
         vm.logout = logout;
 
         $rootScope.$watch('user', function () {
-            vm.currentUsername = ($rootScope.user) ? $rootScope.user.name : '';
-            vm.isLoggedIn = vm.currentUsername != '';
+            vm.currentUsername = $rootScope.user.name;
+            vm.isLoggedIn = authService.isLoggedIn();
         });
 
         function logout() {

@@ -19,5 +19,17 @@ namespace Arcana.Web.Controllers
             ViewBag.Title = "Quick Game";
             return View();
         }
+
+        public ActionResult Login()
+        {
+            ViewBag.Title = "Login";
+            return View();
+        }
+
+        public ActionResult Register()
+        {
+            ViewBag.Title = "Register";
+            return View();
+        }
     }
 }

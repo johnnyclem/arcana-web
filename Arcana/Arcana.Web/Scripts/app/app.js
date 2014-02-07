@@ -1,13 +1,17 @@
 ﻿(function () {
     'use strict';
 
-    var app = angular.module('arcana', []);
+    var app = angular.module('arcana', ['ivpusic.cookie']);
 
-    app.run(['$rootScope', 'authService', function ($rootScope, authService) {
-        authService.getCurrentUser().then(function (response) {
-            $rootScope.user = { name: response.data.name };
-        }, function (error) {
-            $rootScope.user = { name: '' };
-        });        
+    app.run(['$rootScope', 'ipCookie', 'authService', function ($rootScope, ipCookie, authService) {
+        if (ipCookie('user')) {
+            var user = ipCookie('user');
+            $rootScope.user = user;
+        } else {
+            $rootScope.user = {
+                name: '',
+                role: 'Anon'
+            };
+        }        
     }]);
 })();
