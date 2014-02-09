@@ -256,6 +256,7 @@
     <Content Include="Scripts\app\app.js" />
     <Content Include="Scripts\app\controllers\login.js" />
     <Content Include="Scripts\app\controllers\register.js" />
+    <Content Include="Scripts\app\controllers\sidebar.js" />
     <Content Include="Scripts\app\controllers\topnav.js" />
     <Content Include="Scripts\app\services\authService.js" />
     <Content Include="Content\application.css" />

@@ -15,7 +15,8 @@ namespace Arcana.Web
                 "~/Scripts/application.js",                 // Theme JS
                 "~/Scripts/app/app.js",                     // Angular app
                 "~/Scripts/app/services/authService.js",    // Auth service
-                "~/Scripts/app/controllers/topnav.js"       // Top navigation controller
+                "~/Scripts/app/controllers/topnav.js",      // Top navigation controller
+                "~/Scripts/app/controllers/sidebar.js"      // Sidebar menu controller
             ));
             bundles.Add(new ScriptBundle("~/bundles/angular").Include(
                 "~/Scripts/angular.js",
